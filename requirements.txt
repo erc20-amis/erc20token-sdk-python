@@ -5,7 +5,7 @@ cffi>=1.11.2
 chardet>=3.0.4
 coincurve>=6.0.0
 cytoolz>=0.8.2
-ethereum==2.2.0
+ethereum==2.1.5
 ethereum-abi-utils==0.4.4
 ethereum-keys==0.1.0a7
 ethereum-tester==0.1.0b2
