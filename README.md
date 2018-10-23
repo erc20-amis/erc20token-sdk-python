@@ -8,7 +8,7 @@ The SDK is still in beta. No warranties are given, use on your own discretion.
 
 ## Requirements.
 
-Make sure you have Python 2 >=2.7.9.
+Make sure you have Python 3 >=3.6.6
 
 ## Installation 
 
