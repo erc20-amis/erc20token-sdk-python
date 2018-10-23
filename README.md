@@ -13,7 +13,7 @@ Make sure you have Python 3 >=3.6.6
 ## Installation 
 
 ```sh
-pip install erc20token
+pip install erc20token-python
 ```
 
 ### Installation in Google App Engine Python Standard Environment
