@@ -19,7 +19,7 @@ setup(
     maintainer_email='imperchik@gmail.com',
     url='https://github.com/growlot/erc20token-sdk-python',
     license='GPLv2',
-    packages=["erc20token-python"],
+    packages=["erc20token"],
     long_description=open("README.md").read(),
     keywords=["ethereum", "erc20", "blockchain", "cryptocurrency"],
     classifiers=[
