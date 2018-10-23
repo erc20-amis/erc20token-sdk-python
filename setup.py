@@ -10,7 +10,7 @@ with open('requirements-dev.txt') as f:
     tests_requires = [line.strip() for line in f if line.strip()]
 
 setup(
-    name='erc20token-python',
+    name='erc20tokensdk',
     version=__version__,
     description='ERC20 token SDK for Python',
     author='Kin Foundation',
