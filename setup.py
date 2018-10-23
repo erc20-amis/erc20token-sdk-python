@@ -2,7 +2,7 @@
 
 from setuptools import setup
 
-exec(open("erc20token/version.py").read())
+exec(open("erc20tokensdk/version.py").read())
 
 with open('requirements.txt') as f:
     requires = [line.strip() for line in f if line.strip()]
@@ -19,7 +19,7 @@ setup(
     maintainer_email='imperchik@gmail.com',
     url='https://github.com/growlot/erc20token-sdk-python',
     license='GPLv2',
-    packages=["erc20token"],
+    packages=["erc20tokensdk"],
     long_description=open("README.md").read(),
     keywords=["ethereum", "erc20", "blockchain", "cryptocurrency"],
     classifiers=[

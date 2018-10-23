@@ -12,11 +12,11 @@ init:
 .PHONY: init
 
 test-ropsten:
-	python -m pytest -v -rs --ropsten --cov=erc20token -s -x test
+	python -m pytest -v -rs --ropsten --cov=erc20tokensdk -s -x test
 .PHONY: test
 
 test: truffle
-	python -m pytest -v -rs --cov=erc20token -s -x test
+	python -m pytest -v -rs --cov=erc20tokensdk -s -x test
 .PHONY: test
 
 truffle: testrpc truffle-clean

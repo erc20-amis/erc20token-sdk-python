@@ -1,5 +1,5 @@
 include README.md
-recursive-include erc20token *.py
+recursive-include erc20tokensdk *.py
 
 global-exclude .DS_Store
 recursive-exclude test *

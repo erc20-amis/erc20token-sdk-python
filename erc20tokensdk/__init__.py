@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*
 
 # Copyright (C) 2017 Kin Foundation
+# Copyright (C) 2018 imperchik
+
 
 from .exceptions import SdkConfigurationError, SdkNotConfiguredError
 from .sdk import TransactionStatus, TransactionData, SDK

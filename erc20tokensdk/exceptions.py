@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*
 
 # Copyright (C) 2017 Kin Foundation
+# Copyright (C) 2018 imperchik
 
 
 class SdkError(Exception):

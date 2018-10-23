@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*
 
 # Copyright (C) 2017 Kin Foundation
+# Copyright (C) 2018 imperchik
 
 
 import threading
@@ -112,9 +113,9 @@ class SDK(object):
         :param number gas_limit: Transaction gas limit.
 
         :returns: An instance of the SDK.
-        :rtype: :class:`~erc20token.SDK`
+        :rtype: :class:`~erc20tokensdk.SDK`
 
-        :raises: :class:`~erc20token.exceptions.SdkConfigurationError` if some of the configuration
+        :raises: :class:`~erc20tokensdk.exceptions.SdkConfigurationError` if some of the configuration
             parameters are invalid.
         """
 
@@ -183,7 +184,7 @@ class SDK(object):
         :returns: public address of the wallet.
         :rtype: str
 
-        :raises: :class:`~erc20token.exceptions.SdkConfigurationError`: if the SDK was not configured with a private key.
+        :raises: :class:`~erc20tokensdk.exceptions.SdkConfigurationError`: if the SDK was not configured with a private key.
         """
         if not self.address:
             raise SdkNotConfiguredError('private key not configured')
@@ -196,7 +197,7 @@ class SDK(object):
         :returns: : the balance in Ether of the internal wallet.
         :rtype: Decimal
 
-        :raises: :class:`~erc20token.exceptions.SdkConfigurationError`: if the SDK was not configured with a private key.
+        :raises: :class:`~erc20tokensdk.exceptions.SdkConfigurationError`: if the SDK was not configured with a private key.
         """
         if not self.address:
             raise SdkNotConfiguredError('private key not configured')
@@ -209,7 +210,7 @@ class SDK(object):
         :returns: : the balance in tokens of the internal wallet.
         :rtype: Decimal
 
-        :raises: :class:`~erc20token.exceptions.SdkConfigurationError`: if the SDK was not configured with a private key.
+        :raises: :class:`~erc20tokensdk.exceptions.SdkConfigurationError`: if the SDK was not configured with a private key.
         """
         if not self.address:
             raise SdkNotConfiguredError('private key not configured')
@@ -259,7 +260,7 @@ class SDK(object):
         :return: transaction id (hash)
         :rtype: str
 
-        :raises: :class:`~erc20token.exceptions.SdkConfigurationError`: if the SDK was not configured with a private key.
+        :raises: :class:`~erc20tokensdk.exceptions.SdkConfigurationError`: if the SDK was not configured with a private key.
         :raises: ValueError: if the amount is not positive.
         :raises: ValueError: if the address has a wrong format.
         :raises: ValueError: if the nonce is incorrect.
@@ -282,7 +283,7 @@ class SDK(object):
         :returns: transaction id (hash)
         :rtype: str
 
-        :raises: :class:`~erc20token.exceptions.SdkConfigurationError`: if the SDK was not configured with a private key.
+        :raises: :class:`~erc20tokensdk.exceptions.SdkConfigurationError`: if the SDK was not configured with a private key.
         :raises: ValueError: if the amount is not positive.
         :raises: ValueError: if the address has a wrong format.
         :raises: ValueError: if the nonce is incorrect.
@@ -303,7 +304,7 @@ class SDK(object):
         :param str tx_id: transaction id (hash).
 
         :returns: transaction status.
-        :rtype: :class:`~erc20token.TransactionStatus`
+        :rtype: :class:`~erc20tokensdk.TransactionStatus`
         """
         tx = self.web3.eth.getTransaction(tx_id)
         if not tx:
@@ -315,7 +316,7 @@ class SDK(object):
 
         :param str tx_id: transaction id (hash)
         :return: transaction data
-        :rtype: :class:`~erc20token.TransactionData`
+        :rtype: :class:`~erc20tokensdk.TransactionData`
         """
         tx_data = TransactionData()
         tx = self.web3.eth.getTransaction(tx_id)
@@ -417,7 +418,7 @@ class SDK(object):
         :param dict tx: transaction object
 
         :returns: the status of this transaction.
-        :rtype: :class:`~erc20token.TransactionStatus`
+        :rtype: :class:`~erc20tokensdk.TransactionStatus`
         """
         if not tx.get('blockNumber'):
             return TransactionStatus.PENDING

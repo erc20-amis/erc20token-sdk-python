@@ -1,6 +1,6 @@
 
 # ERC20 Token Python SDK 
-[![Build Status](https://travis-ci.org/kinfoundation/erc20token-sdk-python.svg)](https://travis-ci.org/kinfoundation/erc20token-sdk-python) [![Coverage Status](https://codecov.io/gh/kinfoundation/erc20token-sdk-python/branch/master/graph/badge.svg?token=dOvV9K8oFe)](https://codecov.io/gh/kinfoundation/erc20token-sdk-python)
+[![Build Status](https://travis-ci.org/growlot/erc20token-sdk-python.svg)](https://travis-ci.org/growlot/erc20token-sdk-python) [![Coverage Status](https://codecov.io/gh/growlot/erc20token-sdk-python/branch/master/graph/badge.svg?token=dOvV9K8oFe)](https://codecov.io/gh/growlot/erc20token-sdk-python)
 
 ## Disclaimer
 
@@ -13,7 +13,7 @@ Make sure you have Python 3 >=3.6.6
 ## Installation 
 
 ```sh
-pip install erc20token-python
+pip install erc20tokensdk
 ```
 
 ### Installation in Google App Engine Python Standard Environment
@@ -48,32 +48,32 @@ To initialize the SDK, you need to provide the following parameters:
 
 
 ```python
-import erc20token
+import erc20tokensdk
 import json
 
 # Init SDK without a private key (for generic blockchain queries)
-token_sdk = erc20token.SDK(provider_endpoint_uri='http://localhost:8545', 
+token_sdk = erc20tokensdk.SDK(provider_endpoint_uri='http://localhost:8545', 
                        contract_address='0x04f72aa40046c5fb3b143aaba3ab64d1a82410a7', 
                        contract_abi=json.loads(contract_abi))
                        
 # Init SDK with a private key
-token_sdk = erc20token.SDK(provider_endpoint_uri='http://localhost:8545', 
+token_sdk = erc20tokensdk.SDK(provider_endpoint_uri='http://localhost:8545', 
                        private_key='a60baaa34ed125af0570a3df7d4cd3e80dd5dc5070680573f8de0ecfc1957575',
                        contract_address='0x04f72aa40046c5fb3b143aaba3ab64d1a82410a7', 
                        contract_abi=json.loads(contract_abi))
                        
 # Init SDK with a keyfile
 # First, create a keyfile from my private key
-erc20token.create_keyfile('a60baaa34ed125af0570a3df7d4cd3e80dd5dc5070680573f8de0ecfc1957575', 
+erc20tokensdk.create_keyfile('a60baaa34ed125af0570a3df7d4cd3e80dd5dc5070680573f8de0ecfc1957575', 
                           'my password', 'keyfile.json')
 # Then, init SDK with the keyfile
-token_sdk = erc20token.SDK(provider_endpoint_uri='http://localhost:8545', 
+token_sdk = erc20tokensdk.SDK(provider_endpoint_uri='http://localhost:8545', 
                        keyfile='keyfile.json', password='my password',
                        contract_address='0x04f72aa40046c5fb3b143aaba3ab64d1a82410a7', 
                        contract_abi=json.loads(contract_abi))
                        
 # Init SDK with custom gas parameters
-token_sdk = erc20token.SDK(provider_endpoint_uri='http://localhost:8545', 
+token_sdk = erc20tokensdk.SDK(provider_endpoint_uri='http://localhost:8545', 
                        private_key='a60baaa34ed125af0570a3df7d4cd3e80dd5dc5070680573f8de0ecfc1957575',
                        contract_address='0x04f72aa40046c5fb3b143aaba3ab64d1a82410a7', 
                        contract_abi=json.loads(contract_abi),
@@ -128,14 +128,14 @@ FAILED on the blockchain, consuming all your gas.
 # Get transaction status
 tx_status = token_sdk.get_transaction_status(tx_id)
 # Returns one of:
-#   erc20token.TransactionStatus.UNKNOWN = 0
-#   erc20token.TransactionStatus.PENDING = 1
-#   erc20token.TransactionStatus.SUCCESS = 2
-#   erc20token.TransactionStatus.FAIL    = 3
+#   erc20tokensdk.TransactionStatus.UNKNOWN = 0
+#   erc20tokensdk.TransactionStatus.PENDING = 1
+#   erc20tokensdk.TransactionStatus.SUCCESS = 2
+#   erc20tokensdk.TransactionStatus.FAIL    = 3
 
 # Get transaction details
 tx_data = token_sdk.get_transaction_data(tx_id)
-# Returns an erc20token.TransactionData object containing the following fields:
+# Returns an erc20tokensdk.TransactionData object containing the following fields:
 # from_address - the address this transaction was sent from
 # to_address   - the address this transaction was sent to. For token transactions, this is the decoded recipient address.
 # ether_amount - the amount of transferred Ether. 0 for token transactions.
@@ -167,17 +167,17 @@ tx_id = token_sdk.send_tokens('to address', 10)
 
 # In a short while, the transaction enters the pending queue
 for wait in range(0, 5000):
-    if tx_statuses[tx_id] > erc20token.TransactionStatus.UNKNOWN:
+    if tx_statuses[tx_id] > erc20tokensdk.TransactionStatus.UNKNOWN:
         break
     sleep(0.001)
-assert tx_statuses[tx_id] >= erc20token.TransactionStatus.PENDING
+assert tx_statuses[tx_id] >= erc20tokensdk.TransactionStatus.PENDING
 
 # Wait until transaction is confirmed 
 for wait in range(0, 90):
-    if tx_statuses[tx_id] > erc20token.TransactionStatus.PENDING:
+    if tx_statuses[tx_id] > erc20tokensdk.TransactionStatus.PENDING:
         break
     sleep(1)
-assert tx_statuses[tx_id] == erc20token.TransactionStatus.SUCCESS
+assert tx_statuses[tx_id] == erc20tokensdk.TransactionStatus.SUCCESS
 ```
 
 **NOTE**: if you are using a public Ethereum node (for example, http://mainnet.infura.io), it will probably have 

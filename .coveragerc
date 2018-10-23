@@ -1,6 +1,6 @@
 [run]
 branch = True
-include = erc20token/*
+include = erc20tokensdk/*
 omit = test/*
 
 [report]

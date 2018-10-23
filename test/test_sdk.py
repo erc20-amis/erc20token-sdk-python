@@ -7,7 +7,7 @@ import sys
 import threading
 from time import sleep
 
-import erc20token
+import erc20tokensdk
 
 # Ropsten configuration.
 # the following address is set up in Ropsten and is pre-filled with ether and tokens.
@@ -57,115 +57,115 @@ def testnet(ropsten):
 
 
 def test_create_fail_empty_endpoint():
-    with pytest.raises(erc20token.SdkConfigurationError,
+    with pytest.raises(erc20tokensdk.SdkConfigurationError,
                        match='either provider or provider endpoint must be provided'):
-        erc20token.SDK()
-    with pytest.raises(erc20token.SdkConfigurationError,
+        erc20tokensdk.SDK()
+    with pytest.raises(erc20tokensdk.SdkConfigurationError,
                        match='either provider or provider endpoint must be provided'):
-        erc20token.SDK(provider_endpoint_uri='')
+        erc20tokensdk.SDK(provider_endpoint_uri='')
 
 
 def test_create_fail_invalid_contract_address(testnet):
-    with pytest.raises(erc20token.SdkConfigurationError,
+    with pytest.raises(erc20tokensdk.SdkConfigurationError,
                        match="invalid token contract address: '' is not an address"):
-        erc20token.SDK(provider_endpoint_uri=testnet.provider_endpoint_uri)
-    with pytest.raises(erc20token.SdkConfigurationError,
+        erc20tokensdk.SDK(provider_endpoint_uri=testnet.provider_endpoint_uri)
+    with pytest.raises(erc20tokensdk.SdkConfigurationError,
                        match="invalid token contract address: '0xbad' is not an address"):
-        erc20token.SDK(provider_endpoint_uri=testnet.provider_endpoint_uri, contract_address='0xbad')
-    with pytest.raises(erc20token.SdkConfigurationError,
+        erc20tokensdk.SDK(provider_endpoint_uri=testnet.provider_endpoint_uri, contract_address='0xbad')
+    with pytest.raises(erc20tokensdk.SdkConfigurationError,
                        match="invalid token contract address: '0x4c6527c2BEB032D46cfe0648072cAb641cA0aA81' "
                              "has an invalid EIP55 checksum"):
-        erc20token.SDK(provider_endpoint_uri=testnet.provider_endpoint_uri,
+        erc20tokensdk.SDK(provider_endpoint_uri=testnet.provider_endpoint_uri,
                        contract_address='0x4c6527c2BEB032D46cfe0648072cAb641cA0aA81')
 
 
 def test_create_fail_invalid_abi(testnet):
-    with pytest.raises(erc20token.SdkConfigurationError, match="invalid token contract abi: 'abi' is not a list"):
-        erc20token.SDK(provider_endpoint_uri=testnet.provider_endpoint_uri, contract_address=testnet.address)
-    with pytest.raises(erc20token.SdkConfigurationError, match="invalid token contract abi: 'abi' is not a list"):
-        erc20token.SDK(provider_endpoint_uri=testnet.provider_endpoint_uri, contract_address=testnet.address,
+    with pytest.raises(erc20tokensdk.SdkConfigurationError, match="invalid token contract abi: 'abi' is not a list"):
+        erc20tokensdk.SDK(provider_endpoint_uri=testnet.provider_endpoint_uri, contract_address=testnet.address)
+    with pytest.raises(erc20tokensdk.SdkConfigurationError, match="invalid token contract abi: 'abi' is not a list"):
+        erc20tokensdk.SDK(provider_endpoint_uri=testnet.provider_endpoint_uri, contract_address=testnet.address,
                        contract_abi={})
-    with pytest.raises(erc20token.SdkConfigurationError, match="invalid token contract abi: 'abi' is not a list"):
-        erc20token.SDK(provider_endpoint_uri=testnet.provider_endpoint_uri, contract_address=testnet.address,
+    with pytest.raises(erc20tokensdk.SdkConfigurationError, match="invalid token contract abi: 'abi' is not a list"):
+        erc20tokensdk.SDK(provider_endpoint_uri=testnet.provider_endpoint_uri, contract_address=testnet.address,
                        contract_abi='bad')
-    with pytest.raises(erc20token.SdkConfigurationError, match="invalid token contract abi: The elements of 'abi' "
+    with pytest.raises(erc20tokensdk.SdkConfigurationError, match="invalid token contract abi: The elements of 'abi' "
                                                                "are not all dictionaries"):
-        erc20token.SDK(provider_endpoint_uri=testnet.provider_endpoint_uri, contract_address=testnet.address,
+        erc20tokensdk.SDK(provider_endpoint_uri=testnet.provider_endpoint_uri, contract_address=testnet.address,
                        contract_abi=['bad'])
 
 
 def test_create_invalid_gas_params(testnet):
-    with pytest.raises(erc20token.SdkConfigurationError, match='gas price must be either integer of float'):
-        erc20token.SDK(provider_endpoint_uri=testnet.provider_endpoint_uri, contract_address=testnet.address,
+    with pytest.raises(erc20tokensdk.SdkConfigurationError, match='gas price must be either integer of float'):
+        erc20tokensdk.SDK(provider_endpoint_uri=testnet.provider_endpoint_uri, contract_address=testnet.address,
                        contract_abi=testnet.contract_abi, gas_price='bad')
-    with pytest.raises(erc20token.SdkConfigurationError, match='gas price must be either integer of float'):
-        erc20token.SDK(provider_endpoint_uri=testnet.provider_endpoint_uri, contract_address=testnet.address,
+    with pytest.raises(erc20tokensdk.SdkConfigurationError, match='gas price must be either integer of float'):
+        erc20tokensdk.SDK(provider_endpoint_uri=testnet.provider_endpoint_uri, contract_address=testnet.address,
                        contract_abi=testnet.contract_abi, gas_price='0x123')
-    with pytest.raises(erc20token.SdkConfigurationError, match='gas limit must be integer'):
-        erc20token.SDK(provider_endpoint_uri=testnet.provider_endpoint_uri, contract_address=testnet.address,
+    with pytest.raises(erc20tokensdk.SdkConfigurationError, match='gas limit must be integer'):
+        erc20tokensdk.SDK(provider_endpoint_uri=testnet.provider_endpoint_uri, contract_address=testnet.address,
                        contract_abi=testnet.contract_abi, gas_price=10, gas_limit='bad')
 
 
 def test_create_fail_bad_endpoint(testnet):
-    with pytest.raises(erc20token.SdkConfigurationError, match='cannot connect to provider endpoint'):
-        erc20token.SDK(provider_endpoint_uri='bad', contract_address=testnet.address, contract_abi=testnet.contract_abi)
+    with pytest.raises(erc20tokensdk.SdkConfigurationError, match='cannot connect to provider endpoint'):
+        erc20tokensdk.SDK(provider_endpoint_uri='bad', contract_address=testnet.address, contract_abi=testnet.contract_abi)
 
 
 def test_create_fail_bad_private_key(testnet):
-    with pytest.raises(erc20token.SdkConfigurationError, match='cannot load private key: Unexpected private key format.'
+    with pytest.raises(erc20tokensdk.SdkConfigurationError, match='cannot load private key: Unexpected private key format.'
                                                                '  Must be length 32 byte string'):
-        erc20token.SDK(provider_endpoint_uri=testnet.provider_endpoint_uri, contract_address=testnet.address,
+        erc20tokensdk.SDK(provider_endpoint_uri=testnet.provider_endpoint_uri, contract_address=testnet.address,
                        contract_abi=testnet.contract_abi, private_key='bad')
 
 
 @pytest.mark.skipif(sys.version_info.major >= 3, reason="not yet supported in python 3")
 def test_create_fail_keyfile(testnet):
     # file missing
-    with pytest.raises(erc20token.SdkConfigurationError,
+    with pytest.raises(erc20tokensdk.SdkConfigurationError,
                        match="cannot load keyfile: \[Errno 2\] No such file or directory: 'missing.json'"):
-        erc20token.SDK(provider_endpoint_uri=testnet.provider_endpoint_uri, contract_address=testnet.address,
+        erc20tokensdk.SDK(provider_endpoint_uri=testnet.provider_endpoint_uri, contract_address=testnet.address,
                        contract_abi=testnet.contract_abi, keyfile='missing.json')
 
     # not json
     with open(TEST_KEYFILE, 'w+') as f:
         f.write('not json')
-    with pytest.raises(erc20token.SdkConfigurationError, match="cannot load keyfile: No JSON object could be decoded"):
-        erc20token.SDK(provider_endpoint_uri=testnet.provider_endpoint_uri, contract_address=testnet.address,
+    with pytest.raises(erc20tokensdk.SdkConfigurationError, match="cannot load keyfile: No JSON object could be decoded"):
+        erc20tokensdk.SDK(provider_endpoint_uri=testnet.provider_endpoint_uri, contract_address=testnet.address,
                        contract_abi=testnet.contract_abi, keyfile=TEST_KEYFILE)
 
     # json, but invalid format
     with open(TEST_KEYFILE, 'w+') as f:
         f.write('[]')
-    with pytest.raises(erc20token.SdkConfigurationError, match="cannot load keyfile: invalid keyfile format"):
-        erc20token.SDK(provider_endpoint_uri=testnet.provider_endpoint_uri, contract_address=testnet.address,
+    with pytest.raises(erc20tokensdk.SdkConfigurationError, match="cannot load keyfile: invalid keyfile format"):
+        erc20tokensdk.SDK(provider_endpoint_uri=testnet.provider_endpoint_uri, contract_address=testnet.address,
                        contract_abi=testnet.contract_abi, keyfile=TEST_KEYFILE)
     os.remove(TEST_KEYFILE)
     
     # good keyfile, wrong password
-    erc20token.create_keyfile(testnet.private_key, TEST_PASSWORD, TEST_KEYFILE)
-    with pytest.raises(erc20token.SdkConfigurationError, match='cannot load keyfile: MAC mismatch. Password incorrect?'):
-        erc20token.SDK(provider_endpoint_uri=testnet.provider_endpoint_uri, contract_address=testnet.address,
+    erc20tokensdk.create_keyfile(testnet.private_key, TEST_PASSWORD, TEST_KEYFILE)
+    with pytest.raises(erc20tokensdk.SdkConfigurationError, match='cannot load keyfile: MAC mismatch. Password incorrect?'):
+        erc20tokensdk.SDK(provider_endpoint_uri=testnet.provider_endpoint_uri, contract_address=testnet.address,
                        contract_abi=testnet.contract_abi, keyfile=TEST_KEYFILE, password='wrong')
     os.remove(TEST_KEYFILE)
 
 
 def test_sdk_not_configured(testnet):
-    sdk = erc20token.SDK(provider_endpoint_uri=testnet.provider_endpoint_uri, contract_address=testnet.address,
+    sdk = erc20tokensdk.SDK(provider_endpoint_uri=testnet.provider_endpoint_uri, contract_address=testnet.address,
                          contract_abi=testnet.contract_abi)
-    with pytest.raises(erc20token.SdkNotConfiguredError, match='private key not configured'):
+    with pytest.raises(erc20tokensdk.SdkNotConfiguredError, match='private key not configured'):
         sdk.get_address()
-    with pytest.raises(erc20token.SdkNotConfiguredError, match='private key not configured'):
+    with pytest.raises(erc20tokensdk.SdkNotConfiguredError, match='private key not configured'):
         sdk.get_ether_balance()
-    with pytest.raises(erc20token.SdkNotConfiguredError, match='private key not configured'):
+    with pytest.raises(erc20tokensdk.SdkNotConfiguredError, match='private key not configured'):
         sdk.get_token_balance()
-    with pytest.raises(erc20token.SdkNotConfiguredError, match='private key not configured'):
+    with pytest.raises(erc20tokensdk.SdkNotConfiguredError, match='private key not configured'):
         sdk.send_ether('address', 100)
-    with pytest.raises(erc20token.SdkNotConfiguredError, match='private key not configured'):
+    with pytest.raises(erc20tokensdk.SdkNotConfiguredError, match='private key not configured'):
         sdk.send_tokens('address', 100)
 
 
 def test_create_with_private_key(testnet):
-    sdk = erc20token.SDK(provider_endpoint_uri=testnet.provider_endpoint_uri, contract_address=testnet.address,
+    sdk = erc20tokensdk.SDK(provider_endpoint_uri=testnet.provider_endpoint_uri, contract_address=testnet.address,
                          contract_abi=testnet.contract_abi, private_key=testnet.private_key)
     assert sdk
     assert sdk.web3
@@ -176,8 +176,8 @@ def test_create_with_private_key(testnet):
 
 @pytest.mark.skipif(sys.version_info.major >= 3, reason="not yet supported in python 3")
 def test_create_with_keyfile(testnet):
-    erc20token.create_keyfile(testnet.private_key, TEST_PASSWORD, TEST_KEYFILE)
-    sdk = erc20token.SDK(provider_endpoint_uri=testnet.provider_endpoint_uri, contract_address=testnet.address,
+    erc20tokensdk.create_keyfile(testnet.private_key, TEST_PASSWORD, TEST_KEYFILE)
+    sdk = erc20tokensdk.SDK(provider_endpoint_uri=testnet.provider_endpoint_uri, contract_address=testnet.address,
                          contract_abi=testnet.contract_abi, keyfile=TEST_KEYFILE, password=TEST_PASSWORD)
     assert sdk
     assert sdk.web3
@@ -188,7 +188,7 @@ def test_create_with_keyfile(testnet):
 
 
 def test_create_with_gas_params(testnet):
-    sdk = erc20token.SDK(provider_endpoint_uri=testnet.provider_endpoint_uri, contract_address=testnet.address,
+    sdk = erc20tokensdk.SDK(provider_endpoint_uri=testnet.provider_endpoint_uri, contract_address=testnet.address,
                          contract_abi=testnet.contract_abi, private_key=testnet.private_key,
                          gas_price=10.1, gas_limit=10000)
     assert sdk
@@ -198,7 +198,7 @@ def test_create_with_gas_params(testnet):
 
 @pytest.fixture(scope='session')
 def test_sdk(testnet):
-    sdk = erc20token.SDK(provider_endpoint_uri=testnet.provider_endpoint_uri, private_key=testnet.private_key,
+    sdk = erc20tokensdk.SDK(provider_endpoint_uri=testnet.provider_endpoint_uri, private_key=testnet.private_key,
                          contract_address=testnet.contract_address, contract_abi=testnet.contract_abi)
     assert sdk
     assert sdk.web3
@@ -271,32 +271,32 @@ def test_send_tokens_fail(test_sdk, testnet):
 def test_get_transaction_status(test_sdk, testnet):
     # unknown transaction
     tx_status = test_sdk.get_transaction_status('0xdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef')
-    assert tx_status == erc20token.TransactionStatus.UNKNOWN
+    assert tx_status == erc20tokensdk.TransactionStatus.UNKNOWN
 
     # test with real transactions on Ropsten.
     # NOTE: depending on the Ropsten node configuration, these transactions can be already pruned.
     if testnet.type == 'ropsten':
         # successful ether transfer
         tx_status = test_sdk.get_transaction_status('0x86d51e5547b714232d39e86e86295c20e0241f38d9b828c080cc1ec561f34daf')
-        assert tx_status == erc20token.TransactionStatus.SUCCESS
+        assert tx_status == erc20tokensdk.TransactionStatus.SUCCESS
         # successful token transfer
         tx_status = test_sdk.get_transaction_status('0xb5101d58c1e51271837b5343e606b751512882e4f4b175b2f6dae68b7a42d4ab')
-        assert tx_status == erc20token.TransactionStatus.SUCCESS
+        assert tx_status == erc20tokensdk.TransactionStatus.SUCCESS
         # failed token transfer
         tx_status = test_sdk.get_transaction_status('0x7a3f2c843a04f6050258863dbea3fec3651b107baa5419e43adb6118478da36b')
-        assert tx_status == erc20token.TransactionStatus.FAIL
+        assert tx_status == erc20tokensdk.TransactionStatus.FAIL
 
 
 def test_get_transaction_data(test_sdk, testnet):
     tx_data = test_sdk.get_transaction_data('0xdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef')
-    assert tx_data.status == erc20token.TransactionStatus.UNKNOWN
+    assert tx_data.status == erc20tokensdk.TransactionStatus.UNKNOWN
 
     # some tests for Ropsten only
     if testnet.type == 'ropsten':
         # check ether transaction
         tx_id = '0x94d0ca03b3e5c132d3821c6fa416d74bab7e77969d5293a0df73ae7e15b46d7f'
         tx_data = test_sdk.get_transaction_data(tx_id)
-        assert tx_data.status == erc20token.TransactionStatus.SUCCESS
+        assert tx_data.status == erc20tokensdk.TransactionStatus.SUCCESS
         assert tx_data.to_address.lower() == testnet.address.lower()
         assert tx_data.to_address.lower() == testnet.address.lower()
         assert tx_data.ether_amount == Decimal('0.001')
@@ -330,15 +330,15 @@ def monitor_ether_transactions(test_sdk, testnet):
 
     # successful ether transfer
     tx_id = test_sdk.send_ether(testnet.address, Decimal('0.001'))
-    tx_statuses[tx_id] = erc20token.TransactionStatus.UNKNOWN
+    tx_statuses[tx_id] = erc20tokensdk.TransactionStatus.UNKNOWN
 
     for wait in range(0, 30000):
-        if tx_statuses[tx_id] > erc20token.TransactionStatus.UNKNOWN:
+        if tx_statuses[tx_id] > erc20tokensdk.TransactionStatus.UNKNOWN:
             break
         sleep(0.001)
-    assert tx_statuses[tx_id] >= erc20token.TransactionStatus.PENDING
+    assert tx_statuses[tx_id] >= erc20tokensdk.TransactionStatus.PENDING
     tx_data = test_sdk.get_transaction_data(tx_id)
-    assert tx_data.status >= erc20token.TransactionStatus.PENDING
+    assert tx_data.status >= erc20tokensdk.TransactionStatus.PENDING
     assert tx_data.from_address.lower() == testnet.address.lower()
     assert tx_data.to_address.lower() == testnet.address.lower()
     assert tx_data.ether_amount == Decimal('0.001')
@@ -346,10 +346,10 @@ def monitor_ether_transactions(test_sdk, testnet):
     assert tx_data.num_confirmations >= 0
 
     for wait in range(0, 90):
-        if tx_statuses[tx_id] > erc20token.TransactionStatus.PENDING:
+        if tx_statuses[tx_id] > erc20tokensdk.TransactionStatus.PENDING:
             break
         sleep(1)
-    assert tx_statuses[tx_id] == erc20token.TransactionStatus.SUCCESS
+    assert tx_statuses[tx_id] == erc20tokensdk.TransactionStatus.SUCCESS
     tx_data = test_sdk.get_transaction_data(tx_id)
     assert tx_data.num_confirmations >= 1
 
@@ -378,32 +378,32 @@ def monitor_token_transactions(test_sdk, testnet):
             test_sdk.send_tokens(testnet.address, 10000000)
     else:
         tx_id = test_sdk.send_tokens(testnet.address, 10000000)
-        tx_statuses[tx_id] = erc20token.TransactionStatus.UNKNOWN
+        tx_statuses[tx_id] = erc20tokensdk.TransactionStatus.UNKNOWN
 
         for wait in range(0, 30000):
-            if tx_statuses[tx_id] > erc20token.TransactionStatus.UNKNOWN:
+            if tx_statuses[tx_id] > erc20tokensdk.TransactionStatus.UNKNOWN:
                 break
             sleep(0.001)
-        assert tx_statuses[tx_id] == erc20token.TransactionStatus.PENDING
+        assert tx_statuses[tx_id] == erc20tokensdk.TransactionStatus.PENDING
 
         for wait in range(0, 90):
-            if tx_statuses[tx_id] > erc20token.TransactionStatus.PENDING:
+            if tx_statuses[tx_id] > erc20tokensdk.TransactionStatus.PENDING:
                 break
             sleep(1)
-        assert tx_statuses[tx_id] == erc20token.TransactionStatus.FAIL
+        assert tx_statuses[tx_id] == erc20tokensdk.TransactionStatus.FAIL
 
     # successful token transfer
     tx_id = test_sdk.send_tokens(testnet.address, 10)
-    tx_statuses[tx_id] = erc20token.TransactionStatus.UNKNOWN
+    tx_statuses[tx_id] = erc20tokensdk.TransactionStatus.UNKNOWN
 
     # wait for transaction status change
     for wait in range(0, 30000):
-        if tx_statuses[tx_id] > erc20token.TransactionStatus.UNKNOWN:
+        if tx_statuses[tx_id] > erc20tokensdk.TransactionStatus.UNKNOWN:
             break
         sleep(0.001)
-    assert tx_statuses[tx_id] >= erc20token.TransactionStatus.PENDING
+    assert tx_statuses[tx_id] >= erc20tokensdk.TransactionStatus.PENDING
     tx_data = test_sdk.get_transaction_data(tx_id)
-    assert tx_data.status >= erc20token.TransactionStatus.PENDING
+    assert tx_data.status >= erc20tokensdk.TransactionStatus.PENDING
     assert tx_data.from_address.lower() == testnet.address.lower()
     assert tx_data.to_address.lower() == testnet.address.lower()
     assert tx_data.ether_amount == 0
@@ -412,16 +412,16 @@ def monitor_token_transactions(test_sdk, testnet):
 
     # test transaction status
     tx_status = test_sdk.get_transaction_status(tx_id)
-    assert tx_status >= erc20token.TransactionStatus.PENDING
+    assert tx_status >= erc20tokensdk.TransactionStatus.PENDING
 
     # wait for transaction status change
     for wait in range(0, 90):
-        if tx_statuses[tx_id] > erc20token.TransactionStatus.PENDING:
+        if tx_statuses[tx_id] > erc20tokensdk.TransactionStatus.PENDING:
             break
         sleep(1)
-    assert tx_statuses[tx_id] == erc20token.TransactionStatus.SUCCESS
+    assert tx_statuses[tx_id] == erc20tokensdk.TransactionStatus.SUCCESS
     tx_status = test_sdk.get_transaction_status(tx_id)
-    assert tx_status == erc20token.TransactionStatus.SUCCESS
+    assert tx_status == erc20tokensdk.TransactionStatus.SUCCESS
     tx_data = test_sdk.get_transaction_data(tx_id)
     assert tx_data.num_confirmations >= 1
 
