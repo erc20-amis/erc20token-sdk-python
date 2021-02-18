@@ -44,7 +44,7 @@ ERC20_TRANSFER_ABI_PREFIX = encode_hex(function_signature_to_4byte_selector('tra
 
 # default gas configuration.
 DEFAULT_GAS_PER_TX = 60000
-DEFAULT_GAS_PRICE = 10 * 10 ** 9  # 10 Gwei
+DEFAULT_GAS_PRICE = 1 * 10 ** 9  # 1 Gwei
 
 # default request retry configuration (linear backoff).
 RETRY_ATTEMPTS = 3
