@@ -1,6 +1,11 @@
 
 # ERC20 Token Python SDK 
-[![Build Status](https://travis-ci.org/growlot/erc20token-sdk-python.svg)](https://travis-ci.org/growlot/erc20token-sdk-python) [![Coverage Status](https://codecov.io/gh/growlot/erc20token-sdk-python/branch/master/graph/badge.svg?token=dOvV9K8oFe)](https://codecov.io/gh/growlot/erc20token-sdk-python)
+
+[![Build Status](https://travis-ci.org/erc20-amis/erc20token-sdk-python.svg)](https://travis-ci.org/erc20-amis/erc20token-sdk-python) 
+<!--[![Coverage Status](https://codecov.io/gh/erc20-amis/erc20token-sdk-python/branch/master/graph/badge.svg?token=)](https://codecov.io/gh/erc20-amis/erc20token-sdk-python)-->
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/erc20-amis/erc20token-sdk-python/master)
+[![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/erc20-amis/erc20token-sdk-python/blob/master/erc20token-sdk-python.ipynb)
+[![nbviewer](https://img.shields.io/badge/view%20on-nbviewer-brightgreen.svg)](https://nbviewer.jupyter.org/github/erc20-amis/erc20token-sdk-python/blob/master/erc20token-sdk-python.ipynb)
 
 ## Disclaimer
 
@@ -11,6 +16,10 @@ The SDK is still in beta. No warranties are given, use on your own discretion.
 Make sure you have Python 3 >=3.6.6
 
 ## Installation 
+
+Run it directly from within the jupyter notebook; just use Binder or Colab (no need to install it locally) to test it.
+
+Alternatively use:
 
 ```sh
 pip install erc20tokensdk
